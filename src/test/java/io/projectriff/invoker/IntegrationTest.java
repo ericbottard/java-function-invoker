@@ -8,7 +8,9 @@ import io.grpc.StatusRuntimeException;
 import io.projectriff.invoker.client.FunctionClient;
 import org.junit.*;
 import org.junit.rules.TestName;
+import org.springframework.messaging.Message;
 import org.springframework.messaging.converter.MappingJackson2MessageConverter;
+import org.springframework.messaging.support.MessageBuilder;
 import reactor.core.publisher.Flux;
 import reactor.test.StepVerifier;
 import reactor.util.function.Tuple2;
@@ -21,7 +23,6 @@ import java.net.Socket;
 import java.nio.charset.StandardCharsets;
 import java.time.Duration;
 import java.util.Arrays;
-import java.util.Currency;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
@@ -181,6 +182,26 @@ public class IntegrationTest {
         Flux<Integer> response = fn.apply(Flux.just(1, 2, 4));
         StepVerifier.create(response)
                 .expectNext(100, 50, 25)
+                .verifyComplete();
+
+    }
+
+    /*
+     * Tests that functions can accept/return spring Messages.
+     */
+    @Test
+    @Ignore("")
+    public void testMessagesAsArgument() throws Exception {
+        setFunctionLocation("message-as-argument-1.0.0");
+        setFunctionClass("com.acme.MessageFunction");
+        process = processBuilder.start();
+
+
+        FunctionClient<Flux<Message<String>>, Flux<Message>> fn = FunctionClient.of(connect(), Message.class);
+
+        Flux<Message> response = fn.apply(Flux.just(MessageBuilder.withPayload("hello").build()));
+        StepVerifier.create(response)
+                .expectNext(MessageBuilder.withPayload(5).build())
                 .verifyComplete();
 
     }
