@@ -3,6 +3,7 @@ package io.projectriff.invoker.main;
 import io.grpc.Server;
 import io.grpc.ServerBuilder;
 import io.projectriff.invoker.rpc.StartFrame;
+import io.projectriff.invoker.server.CloudEventMessageConverter;
 import io.projectriff.invoker.server.GrpcServerAdapter;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
@@ -76,4 +77,8 @@ public class EntryPoint {
         };
     }
 
+    @Bean
+    public CloudEventMessageConverter cloudEventMessageConverter() {
+        return new CloudEventMessageConverter();
+    }
 }

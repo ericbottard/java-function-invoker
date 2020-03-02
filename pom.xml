@@ -77,6 +77,11 @@
             <scope>runtime</scope><!-- Not needed per-se, but made available in case functions use it (and we want our CL to load it)-->
         </dependency>
         <dependency>
+            <groupId>io.cloudevents</groupId>
+            <artifactId>cloudevents-api</artifactId>
+            <version>1.2.0</version>
+        </dependency>
+        <dependency>
             <groupId>ch.qos.logback</groupId>
             <artifactId>logback-classic</artifactId>
             <scope>runtime</scope>
