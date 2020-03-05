@@ -190,18 +190,19 @@ public class IntegrationTest {
      * Tests that functions can accept/return spring Messages.
      */
     @Test
-    @Ignore("")
     public void testMessagesAsArgument() throws Exception {
         setFunctionLocation("message-as-argument-1.0.0");
         setFunctionClass("com.acme.MessageFunction");
         process = processBuilder.start();
 
 
-        FunctionClient<Flux<Message<String>>, Flux<Message>> fn = FunctionClient.of(connect(), Message.class);
+        FunctionClient<Flux<String>, Flux<Integer>> fn = FunctionClient.of(connect(), Integer.class);
 
-        Flux<Message> response = fn.apply(Flux.just(MessageBuilder.withPayload("hello").build()));
+        Flux<Integer> response = fn.apply(
+                Flux.just("hello")
+        );
         StepVerifier.create(response)
-                .expectNext(MessageBuilder.withPayload(5).build())
+                .expectNext(5)
                 .verifyComplete();
 
     }

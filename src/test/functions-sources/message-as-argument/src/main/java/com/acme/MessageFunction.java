@@ -9,6 +9,9 @@ public class MessageFunction implements Function<Message<String>, Message<Intege
 
     @Override
     public Message<Integer> apply(Message<String> stringMessage) {
-        return MessageBuilder.withPayload(stringMessage.getPayload().length()).build();
+        System.out.println("Input = " + stringMessage);
+        Message<Integer> result = MessageBuilder.withPayload(stringMessage.getPayload().length()).build();
+        System.out.println("Result in function " + result);
+        return result;
     }
 }

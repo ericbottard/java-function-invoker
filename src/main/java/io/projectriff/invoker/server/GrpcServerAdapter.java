@@ -115,6 +115,7 @@ public class GrpcServerAdapter extends ReactorRiffGrpc.RiffImplBase {
 
     private OutputSignal fromSpringMessage(Tuple2<Integer, Message<byte[]>> out) {
         int resultIndex = out.getT1();
+        System.out.println("fromSpringMessage : " + new String(out.getT2().getPayload()));
         MessageHeaders headers = out.getT2().getHeaders();
         MimeType contentType = headers.get(MessageHeaders.CONTENT_TYPE, MimeType.class);
         OutputFrame.Builder builderForOutputFrame = OutputFrame.newBuilder()
@@ -157,6 +158,7 @@ public class GrpcServerAdapter extends ReactorRiffGrpc.RiffImplBase {
                             Object[] args = groupList.stream().map(g -> g.skip(1)).toArray(Object[]::new);
                             Object tuple = asTupleOrSingleArg(args);
                             // apply the function
+                            System.out.println("The input is " + tuple);
                             Object result = springCloudFunction.apply(tuple);
 
                             Flux<Message<byte[]>>[] bareOutputs = promoteToArray(result);
