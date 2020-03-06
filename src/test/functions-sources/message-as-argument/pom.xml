@@ -42,7 +42,9 @@
                 </executions>
                 <configuration>
                     <layout>NONE</layout>
+                    <!--
                     <outputDirectory>../../functions</outputDirectory>
+                    -->
                     <!--excludes>
                         <exclude>
                             <groupId>org.springframework</groupId>
