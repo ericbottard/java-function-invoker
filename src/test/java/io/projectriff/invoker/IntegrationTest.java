@@ -71,7 +71,7 @@ public class IntegrationTest {
 
     @Before
     public void prepareProcess() {
-        processBuilder = new ProcessBuilder(javaExecutable, "-jar", /*"-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005",*/ invokerJar);
+        processBuilder = new ProcessBuilder(javaExecutable, "-jar"/*, "-agentlib:jdwp=transport=dt_socket,server=y,suspend=y,address=*:5005"*/, invokerJar);
         processBuilder.redirectOutput(new File(String.format("target%s%s.out", File.separator, testName.getMethodName())));
         processBuilder.redirectError(new File(String.format("target%s%s.err", File.separator, testName.getMethodName())));
         processBuilder.environment().clear();
